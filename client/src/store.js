@@ -74,13 +74,53 @@ export default new Vuex.Store({
         .then(serverBoard => {
           dispatch('getBoards')
         })
-    }
+    },
     //#endregion
 
+    getList({ commit, dispatch }) {
+      api.get('lists')
+        .then(res => {
+          commit('setLists', res.data)
+        })
+    },
+
+
+    addList({ commit, dispatch }, listData) {
+      api.post('lists', listData)
+        .then(serverList => {
+          dispatch('getLists')
+        })
+    },
 
     //#region -- LISTS --
 
+    getTask({ commit, dispatch }) {
+      api.get('tasks')
+        .then(res => {
+          commit('setTasks', res.data)
+        })
+    },
 
+    addTask({ commit, dispatch }) {
+      api.post('tasks', taskData)
+        .then(serverTask => {
+          dispatch('getTasks')
+        })
+    },
+
+    getComment({ commit, dispatch }) {
+      api.get('comments')
+        .then(res => {
+          commit('setComments', res.data)
+        })
+    },
+
+    addComment({ commit, dispatch }) {
+      api.post('tasks', taskComment)
+        .then(serverComment => {
+          dispatch('getComments')
+        })
+    }
 
     //#endregion
   }
