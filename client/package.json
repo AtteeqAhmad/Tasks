@@ -15,5 +15,9 @@
   "devDependencies": {
     "@vue/cli-service": "^3.8.0",
     "vue-template-compiler": "^2.5.17"
-  }
+  },
+  "description": "```\r npm install\r ```",
+  "main": "postcss.config.js",
+  "author": "",
+  "license": "ISC"
 }
