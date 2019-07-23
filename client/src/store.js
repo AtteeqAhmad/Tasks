@@ -53,7 +53,7 @@ export default new Vuex.Store({
       try {
         let success = await AuthService.Logout()
         if (!success) { }
-        commit('resetState')
+        commit('setUser', {})
         router.push({ name: "login" })
       } catch (e) {
         console.warn(e.message)
@@ -63,65 +63,41 @@ export default new Vuex.Store({
 
 
     //#region -- BOARDS --
-    getBoards({ commit, dispatch }) {
-      api.get('boards')
-        .then(res => {
-          commit('setBoards', res.data)
-        })
+    async getBoards({ commit, dispatch }) {
+      try {
+        let res = await api.get('boards')
+        commit('setBoards', res.data)
+      } catch (error) {
+        console.error(error)
+      }
     },
-    addBoard({ commit, dispatch }, boardData) {
-      api.post('boards', boardData)
-        .then(serverBoard => {
-          dispatch('getBoards')
-        })
+
+    async getBoardById({ dispatch, commit }, payload) {
+      try {
+        let res = await api.get('boards/' + payload.boardId)
+        commit('setActiveBoard', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async addBoard({ commit, dispatch }, payload) {
+      try {
+        let res = await api.post('boards/', payload)
+        dispatch('getBoards')
+      } catch (error) {
+        console.error(error)
+      }
     },
     //#endregion
-
-    getList({ commit, dispatch }) {
-      api.get('lists')
-        .then(res => {
-          commit('setLists', res.data)
-        })
-    },
-
-
-    addList({ commit, dispatch }, listData) {
-      api.post('lists', listData)
-        .then(serverList => {
-          dispatch('getLists')
-        })
-    },
-
-    //#region -- LISTS --
-
-    getTask({ commit, dispatch }) {
-      api.get('tasks')
-        .then(res => {
-          commit('setTasks', res.data)
-        })
-    },
-
-    addTask({ commit, dispatch }) {
-      api.post('tasks', taskData)
-        .then(serverTask => {
-          dispatch('getTasks')
-        })
-    },
-
-    getComment({ commit, dispatch }) {
-      api.get('comments')
-        .then(res => {
-          commit('setComments', res.data)
-        })
-    },
-
-    addComment({ commit, dispatch }) {
-      api.post('tasks', taskComment)
-        .then(serverComment => {
-          dispatch('getComments')
-        })
+    async deleteBoard({ dispatch, commit }, payload) {
+      try {
+        let res = await api.delete('boards/' + payload)
+        router.push({ name: 'boards' })
+        console.log(res)
+      } catch (error) {
+        console.error(error)
+      }
     }
-
-    //#endregion
   }
 })

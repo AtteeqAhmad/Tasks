@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import AuthService from "./AuthService"
 
-//Vue.config.productionTip = false
+Vue.config.productionTip = false
 
 async function init() {
   let user = await AuthService.Authenticate()

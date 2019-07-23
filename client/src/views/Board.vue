@@ -18,3 +18,30 @@ export default {
   props: ["boardId"]
 };
 </script>
+
+
+<!-- // <script>
+// export default {
+//   name: "board",
+//   data() {
+//     retrun {}
+//   },
+//   mounted() {
+//     let dataToSend = {
+//       boardId: this.$route.params.boardId
+//     };
+//     this.$store.dispatch("getBoardByID", dataToSend);
+//   },
+//   computed: {
+//     board() {
+//       return this.$store.state.activeBoard;
+//     }
+//   },
+//   methods: {
+//     deleteBoard() {
+//       this.$store.dispatch("deleteBoard", this.board._id);
+//     }
+//   },
+//   components: {}
+// };
+// </script>
