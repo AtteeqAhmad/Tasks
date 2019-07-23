@@ -5,43 +5,28 @@
 <script>
 export default {
   name: "board",
+  data() {
+    return {};
+  },
+
+  mounted() {
+    let dataToSend = {
+      boardId: this.$route.params.boardId
+    };
+    this.$store.dispatch("getBoardById", dataToSend);
+  },
   computed: {
     board() {
-      return (
-        //FIXME This does not work on page reload because the boards array is empty in the store
-        this.$store.state.boards.find(b => b._id == this.boardId) || {
-          title: "Loading..."
-        }
-      );
+      return this.$store.state.activeBoard;
     }
   },
-  props: ["boardId"]
+  methods: {
+    deleteBoard() {
+      this.$store.dispatch("deleteBoard", this.board._id);
+    }
+  },
+  components: {}
 };
 </script>
 
 
-<!-- // <script>
-// export default {
-//   name: "board",
-//   data() {
-//     retrun {}
-//   },
-//   mounted() {
-//     let dataToSend = {
-//       boardId: this.$route.params.boardId
-//     };
-//     this.$store.dispatch("getBoardByID", dataToSend);
-//   },
-//   computed: {
-//     board() {
-//       return this.$store.state.activeBoard;
-//     }
-//   },
-//   methods: {
-//     deleteBoard() {
-//       this.$store.dispatch("deleteBoard", this.board._id);
-//     }
-//   },
-//   components: {}
-// };
-// </script>

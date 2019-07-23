@@ -27,6 +27,9 @@ export default new Vuex.Store({
     },
     setBoards(state, boards) {
       state.boards = boards
+    },
+    setActiveBoard(state, data) {
+      state.activeBoard = data
     }
   },
   actions: {
