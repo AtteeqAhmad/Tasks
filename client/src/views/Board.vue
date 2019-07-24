@@ -1,6 +1,10 @@
 <template>
   <div class="board">
     {{board.title}}
+    <form @submit.prevent="addList">
+      <input type="text" placeholder="title" v-model="newList.title" required />
+      <button type="submit" class="btn btn-primary">Create Me</button>
+    </form>
     <List></List>
   </div>
 </template>
@@ -9,8 +13,14 @@
 import List from "@/components/List.vue";
 export default {
   name: "board",
+  props: ["boardId"],
   data() {
-    return {};
+    return {
+      newList: {
+        title: "",
+        boardId: this.boardId
+      }
+    };
   },
 
   mounted() {
@@ -18,6 +28,7 @@ export default {
       boardId: this.$route.params.boardId
     };
     this.$store.dispatch("getBoardById", dataToSend);
+    this.$store.dispatch("getListsByBoardId", this.$route.params.boardId);
   },
   computed: {
     board() {
@@ -25,8 +36,9 @@ export default {
     }
   },
   methods: {
-    deleteBoard() {
-      this.$store.dispatch("deleteBoard", this.board._id);
+    addList() {
+      this.$store.dispatch("addList", this.newList);
+      this.newList = { title: "", boardId: this.boardId };
     }
   },
   components: {

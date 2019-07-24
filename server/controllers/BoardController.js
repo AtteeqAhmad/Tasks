@@ -9,6 +9,7 @@ export default class BoardsController {
       .use(Authorize.authenticated)
       .get('', this.getAll)
       .get('/:id', this.getById)
+      .get('/board/:id/lists/', this.getListByBoardId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
@@ -31,6 +32,13 @@ export default class BoardsController {
   async getById(req, res, next) {
     try {
       let data = await _boardService.findOne({ _id: req.params.id, authorId: req.session.uid })
+      return res.send(data)
+    } catch (error) { next(error) }
+  }
+
+  async getListByBoardId(req, res, next) {
+    try {
+      let data = await _boardService.findById({ _id: req.params.id, authorId: req.session.uid })
       return res.send(data)
     } catch (error) { next(error) }
   }

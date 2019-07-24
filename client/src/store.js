@@ -127,33 +127,20 @@ export default new Vuex.Store({
       }
     },
 
-    async getLists({ dispatch, commit }) {
-      try {
-        let res = await api.get('lists')
-        commit("setLists", res.data.data)
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    // async getLists({ commit, dispatch }) {
-    //   api.get('/boards/id/list')
-    //     .then(res => {
-    //       commit('setLists', res.data)
-    //     })
-    // },
+
 
     async addList({ commit, dispatch }, listData) {
       api.post('lists', listData)
         .then(serverList => {
-          dispatch('getLists')
+          dispatch('getListsByBoardId', listData.boardId)
         })
     },
 
 
-    async getListById({ commit, dispatch }, payload) {
+    async getListsByBoardId({ commit, dispatch }, payload) {
       try {
-        let res = await api.get('lists/' + payload.listId)
-        commit('setActiveList', res.data.data)
+        let res = await api.get('api/board/:id/lists/' + payload)
+        commit("setLists", res.data)
       } catch (error) {
         console.error(error)
       }

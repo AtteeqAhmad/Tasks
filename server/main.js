@@ -37,9 +37,10 @@ server.use('/account', new AuthController().router)
 
 //YOUR ROUTES HERE!!!!!!
 import BoardController from './controllers/BoardController'
+import ListsController from './controllers/ListController';
 
 server.use('/api/boards', new BoardController().router)
-
+server.use('/api/lists', new ListsController().router)
 
 
 //Default Error Handler

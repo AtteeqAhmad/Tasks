@@ -1,7 +1,9 @@
 <template>
   <div class="list">
-    {{list.title}}
-    <button class="btn btn-danger" @click="deletelist">Delete Me</button>
+    <div v-for="list in lists" :key="list._id">
+      {{list.title}}
+      <button class="btn btn-danger" @click="deleteList(list._id)">Delete Me</button>
+    </div>
   </div>
 </template>
 
@@ -10,26 +12,21 @@ export default {
   name: "List",
   data() {
     return {
-      newList: {}
+      title: ""
     };
   },
 
-  mounted() {
-    let dataToSend = {
-      listId: this.$route.params.listId
-    };
-    this.$store.dispatch("getLists", dataToSend);
-  },
+  mounted() {},
 
   computed: {
-    list() {
+    lists() {
       return this.$store.state.lists;
     }
   },
 
   methods: {
-    deleteList() {
-      this.$store.dispatch("deleteList", this.list._id);
+    deleteList(id) {
+      this.$store.dispatch("deleteList", id);
     }
   },
 
