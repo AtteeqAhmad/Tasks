@@ -19,7 +19,13 @@ export default new Vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {}
+    activeBoard: {},
+    lists: [],
+    activeList: {},
+    tasks: [],
+    activeTask: {},
+    comments: [],
+    activeComments: {}
   },
   mutations: {
     setUser(state, user) {
@@ -30,6 +36,24 @@ export default new Vuex.Store({
     },
     setActiveBoard(state, data) {
       state.activeBoard = data
+    },
+    setLists(state, lists) {
+      state.lists = lists
+    },
+    setActiveList(state, data) {
+      state.activeList = data
+    },
+    setTasks(state, tasks) {
+      state.tasks = tasks
+    },
+    setActiveTask(state, data) {
+      state.activeTask = data
+    },
+    setComments(state, comments) {
+      state.comments = comments
+    },
+    setActiveComment(state, data) {
+      state.activeComment = data
     }
   },
   actions: {
@@ -101,6 +125,121 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+
+    async getLists({ dispatch, commit }) {
+      try {
+        let res = await api.get('lists')
+        commit("setLists", res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    // async getLists({ commit, dispatch }) {
+    //   api.get('/boards/id/list')
+    //     .then(res => {
+    //       commit('setLists', res.data)
+    //     })
+    // },
+
+    async addList({ commit, dispatch }, listData) {
+      api.post('lists', listData)
+        .then(serverList => {
+          dispatch('getLists')
+        })
+    },
+
+
+    async getListById({ commit, dispatch }, payload) {
+      try {
+        let res = await api.get('lists/' + payload.listId)
+        commit('setActiveList', res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+
+    async deleteList({ dispatch, commit }, payload) {
+      try {
+        let res = await api.delete('lists/' + payload)
+        router.push({ name: 'lists' })
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    // #region -- LISTS --
+
+    async getTask({ commit, dispatch }) {
+      api.get('tasks')
+        .then(res => {
+          commit('setTasks', res.data)
+        })
+    },
+
+    async addTask({ commit, dispatch }) {
+      api.post('tasks', taskData)
+        .then(serverTask => {
+          dispatch('getTasks')
+        })
+    },
+
+    async getTaskById({ dispatch, commit }, payload) {
+      try {
+        let res = await api.get('tasks/' + payload.taskId)
+        commit('setActivetTask', res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+
+    async deleteTask({ dispatch, commit }, payload) {
+      try {
+        let res = await api.delete('tasks/' + payload)
+        router.push({ name: 'tasks' })
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+
+    async getComment({ commit, dispatch }) {
+      api.get('comments')
+        .then(res => {
+          commit('setComments', res.data)
+        })
+    },
+
+    async addComment({ commit, dispatch }) {
+      api.post('tasks', taskComment)
+        .then(serverComment => {
+          dispatch('getComments')
+        })
+    },
+
+    async getCommentById({ dispatch, commit }, payload) {
+      try {
+        let res = await api.get('comments/' + payload.commentId)
+        commit('setActiveComment', res.data.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async deleteComment({ dispatch, commit }, payload) {
+      try {
+        let res = await api.delete('comments/' + payload)
+        router.push({ name: 'comments' })
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    //#endregion
   }
 })

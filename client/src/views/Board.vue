@@ -1,11 +1,12 @@
 <template>
   <div class="board">
     {{board.title}}
-    <button class="btn btn-danger" @click="deleteBoard">Delete Me</button>
+    <List></List>
   </div>
 </template>
 
 <script>
+import List from "@/components/List.vue";
 export default {
   name: "board",
   data() {
@@ -28,7 +29,9 @@ export default {
       this.$store.dispatch("deleteBoard", this.board._id);
     }
   },
-  components: {}
+  components: {
+    List
+  }
 };
 </script>
 
