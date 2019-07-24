@@ -1,11 +1,7 @@
 <template>
   <div class="list">
     {{list.title}}
-    <form @submit.prevent="addList">
-      <input type="text" placeholder="title" required />
-      <button class="btn btn-primary" @click="createList">Create Me</button>
-      <button class="btn btn-danger" @click="deletelist">Delete Me</button>
-    </form>
+    <button class="btn btn-danger" @click="deletelist">Delete Me</button>
   </div>
 </template>
 
@@ -32,9 +28,6 @@ export default {
   },
 
   methods: {
-    addList() {
-      this.$store.dispatch("addList", this.newList);
-    },
     deleteList() {
       this.$store.dispatch("deleteList", this.list._id);
     }
