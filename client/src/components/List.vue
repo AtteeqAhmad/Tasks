@@ -23,7 +23,8 @@ export default {
       title: "",
       newTask: {
         title: "",
-        listId: this.listData._id
+        listId: this.listData._id,
+        boardId: this.listData.boardId
       }
     };
   },
@@ -38,14 +39,18 @@ export default {
       return this.$store.state.activeList;
     },
     tasks() {
-      return this.$store.state.tasks;
+      return this.$store.state.tasks[this.listData._id];
     }
   },
 
   methods: {
     addTask() {
       this.$store.dispatch("addTask", this.newTask);
-      this.newTask = { title: "", listId: this.listData._id };
+      // this.newTask = {
+      //   title: "",
+      //   listId: this.listData._id,
+      //   boardId: this.boardId
+      // };
     },
     deleteList(id) {
       this.$store.dispatch("deleteList", id);

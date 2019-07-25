@@ -2,15 +2,8 @@
   <div class="task">
     <div>
       {{taskData.title}}
-      <button class="btn btn-danger" @click="deleteTask(taskData._id)">Delete Me</button>
+      <button class="btn btn-danger" @click="deleteTask">Delete Me</button>
     </div>
-    <!-- 
-    <form @submit.prevent="addTask">
-      <input type="text" placeholder="title" v-model="newTask.title" required />
-      <button type="submit" class="btn btn-primary">I'm your Task</button>
-    </form>
-    <Task v-for="task in tasks" :taskData="task" :key="task._id"></Task>
-    </div>-->
   </div>
 </template>
 
@@ -35,8 +28,8 @@ export default {
   computed: {},
 
   methods: {
-    deleteTask(id) {
-      this.$store.dispatch("deleteTask", id);
+    deleteTask() {
+      this.$store.dispatch("deleteTask", this.taskData._id);
     }
   },
 

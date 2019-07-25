@@ -22,7 +22,12 @@ export default new Vuex.Store({
     activeBoard: {},
     lists: [],
     activeList: {},
-    tasks: [],
+    tasks: {
+      /**
+       * listId2: [{task1}, {task2}],
+       * listId42: []
+       */
+    },
     activeTask: {},
     comments: [],
     activeComments: {}
@@ -43,8 +48,8 @@ export default new Vuex.Store({
     setActiveList(state, data) {
       state.activeList = data
     },
-    setTasks(state, tasks) {
-      state.tasks = tasks
+    setTasks(state, payload) {
+      Vue.set(state.tasks, payload.listId, payload.tasks)
     },
     setActiveTask(state, data) {
       state.activeTask = data
@@ -167,17 +172,16 @@ export default new Vuex.Store({
     },
 
     async addTask({ commit, dispatch }, taskData) {
-      debugger
       api.post('tasks', taskData)
         .then(servertask => {
-          dispatch('getTasksByListId', taskData)
+          dispatch('getTasksByListId', { _id: taskData.listId })
         })
     },
 
     async getTasksByListId({ dispatch, commit }, payload) {
       try {
         let res = await api.get('/lists/' + payload._id + '/tasks/')
-        commit('setTasks', payload)
+        commit('setTasks', { tasks: res.data, listId: payload._id })
       } catch (error) {
         console.error(error)
       }
@@ -186,6 +190,7 @@ export default new Vuex.Store({
 
     async deleteTask({ dispatch, commit }, payload) {
       try {
+        debugger
         let res = await api.delete('tasks/' + payload)
         router.push({ name: 'tasks' })
         console.log(res)
