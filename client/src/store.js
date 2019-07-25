@@ -139,7 +139,7 @@ export default new Vuex.Store({
 
     async getListsByBoardId({ commit, dispatch }, payload) {
       try {
-        let res = await api.get('api/board/:id/lists/' + payload)
+        let res = await api.get('/boards/' + payload + '/lists/')
         commit("setLists", res.data)
       } catch (error) {
         console.error(error)

@@ -1,8 +1,8 @@
 <template>
   <div class="list">
-    <div v-for="list in lists" :key="list._id">
-      {{list.title}}
-      <button class="btn btn-danger" @click="deleteList(list._id)">Delete Me</button>
+    <div>
+      {{listData.title}}
+      <button class="btn btn-danger" @click="deleteList(listData._id)">Delete Me</button>
     </div>
   </div>
 </template>
@@ -10,6 +10,7 @@
 <script>
 export default {
   name: "List",
+  props: ["listData"],
   data() {
     return {
       title: ""
@@ -18,11 +19,7 @@ export default {
 
   mounted() {},
 
-  computed: {
-    lists() {
-      return this.$store.state.lists;
-    }
-  },
+  computed: {},
 
   methods: {
     deleteList(id) {
@@ -35,4 +32,7 @@ export default {
 </script>
 
 <style scoped>
+* {
+  outline: 1px solid black;
+}
 </style>

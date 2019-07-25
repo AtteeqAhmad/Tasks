@@ -5,7 +5,7 @@
       <input type="text" placeholder="title" v-model="newList.title" required />
       <button type="submit" class="btn btn-primary">Create Me</button>
     </form>
-    <List></List>
+    <List v-for="list in lists" :listData="list" :key="list._id"></List>
   </div>
 </template>
 
@@ -33,6 +33,9 @@ export default {
   computed: {
     board() {
       return this.$store.state.activeBoard;
+    },
+    lists() {
+      return this.$store.state.lists;
     }
   },
   methods: {
