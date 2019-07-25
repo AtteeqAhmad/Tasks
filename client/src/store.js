@@ -166,17 +166,18 @@ export default new Vuex.Store({
         })
     },
 
-    async addTask({ commit, dispatch }) {
+    async addTask({ commit, dispatch }, taskData) {
+      debugger
       api.post('tasks', taskData)
-        .then(serverTask => {
-          dispatch('getTasks')
+        .then(servertask => {
+          dispatch('getTasksByListId', taskData)
         })
     },
 
     async getTasksByListId({ dispatch, commit }, payload) {
       try {
-        let res = await api.get('tasks/' + payload.taskId)
-        commit('setActivetTask', res.data.data)
+        let res = await api.get('/lists/' + payload._id + '/tasks/')
+        commit('setTasks', payload)
       } catch (error) {
         console.error(error)
       }

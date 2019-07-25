@@ -21,7 +21,8 @@ export default {
   props: ["taskData"],
   data() {
     return {
-      title: ""
+      title: "",
+      taskId: this.taskId
     };
   },
 

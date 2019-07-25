@@ -23,15 +23,14 @@ export default {
       title: "",
       newTask: {
         title: "",
-        listId: this.listId
+        listId: this.listData._id
       }
     };
   },
 
   mounted() {
-    let dataToSend = {
-      listId: this.$route.params.listId
-    };
+    let dataToSend = {};
+    this.$store.dispatch("getTasksByListId", this.listData);
   },
 
   computed: {
@@ -46,7 +45,7 @@ export default {
   methods: {
     addTask() {
       this.$store.dispatch("addTask", this.newTask);
-      this.newTask = { title: "", listId: this.listId };
+      this.newTask = { title: "", listId: this.listData._id };
     },
     deleteList(id) {
       this.$store.dispatch("deleteList", id);
