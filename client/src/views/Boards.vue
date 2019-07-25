@@ -2,7 +2,7 @@
   <div class="boards">
     WELCOME TO THE BOARDS!!!
     <form @submit.prevent="addBoard">
-      <input type="text" placeholder="title" v-model="newBoard.title" required />
+      <input type="text" placeholder="Board title" v-model="newBoard.title" required />
       <input type="text" placeholder="description" v-model="newBoard.description" />
       <button type="submit">Create Board</button>
       <button @click="Logout()" class="btn btn-danger" id="Logout">Logout</button>

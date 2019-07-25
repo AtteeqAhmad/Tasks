@@ -173,7 +173,7 @@ export default new Vuex.Store({
         })
     },
 
-    async getTaskById({ dispatch, commit }, payload) {
+    async getTasksByListId({ dispatch, commit }, payload) {
       try {
         let res = await api.get('tasks/' + payload.taskId)
         commit('setActivetTask', res.data.data)

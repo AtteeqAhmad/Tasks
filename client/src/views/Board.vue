@@ -2,7 +2,7 @@
   <div class="board">
     {{board.title}}
     <form @submit.prevent="addList">
-      <input type="text" placeholder="title" v-model="newList.title" required />
+      <input type="text" placeholder="List title" v-model="newList.title" required />
       <button type="submit" class="btn btn-primary">Create Me</button>
     </form>
     <List v-for="list in lists" :listData="list" :key="list._id"></List>
