@@ -54,8 +54,8 @@ export default new Vuex.Store({
     setActiveTask(state, data) {
       state.activeTask = data
     },
-    setComments(state, comments) {
-      state.comments = comments
+    setComments(state, payload) {
+      Vue.set(state.comments, payload.taskId, payload.comments)
     },
     setActiveComment(state, data) {
       state.activeComment = data
@@ -190,7 +190,6 @@ export default new Vuex.Store({
 
     async deleteTask({ dispatch, commit }, payload) {
       try {
-        debugger
         let res = await api.delete('tasks/' + payload)
         router.push({ name: 'tasks' })
         console.log(res)
@@ -208,17 +207,17 @@ export default new Vuex.Store({
         })
     },
 
-    async addComment({ commit, dispatch }) {
-      api.post('tasks', taskComment)
+    async addComment({ commit, dispatch }, CommentData) {
+      api.post('comments', CommentData)
         .then(serverComment => {
-          dispatch('getComments')
+          dispatch('getCommentsByTaskId', { _id: CommentData.taskId })
         })
     },
 
-    async getCommentById({ dispatch, commit }, payload) {
+    async getCommentsByTaskId({ dispatch, commit }, payload) {
       try {
-        let res = await api.get('comments/' + payload.commentId)
-        commit('setActiveComment', res.data.data)
+        let res = await api.get('/tasks/' + payload._id + '/comments/')
+        commit('setComments', { comments: res.data, taskId: payload._id })
       } catch (error) {
         console.error(error)
       }
@@ -233,6 +232,5 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
-    //#endregion
   }
 })

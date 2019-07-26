@@ -39,10 +39,12 @@ server.use('/account', new AuthController().router)
 import BoardController from './controllers/BoardController'
 import ListsController from './controllers/ListController';
 import TasksController from './controllers/TaskController';
+import CommentsController from './controllers/CommentController';
 
 server.use('/api/boards', new BoardController().router)
 server.use('/api/lists', new ListsController().router)
 server.use('/api/tasks', new TasksController().router)
+server.use('/api/comments', new CommentsController().router)
 
 
 //Default Error Handler

@@ -5,12 +5,13 @@ let ObjectId = Schema.Types.ObjectId
 
 let _schema = new Schema({
       title: { type: String, required: true },
-      authorId: { type: ObjectId, refs: 'User', required: true },
-      boardId: { type: ObjectId, ref: 'Task', required: true }
+      authorId: { type: ObjectId, ref: 'User', required: true },
+      listId: { type: ObjectId, ref: 'list', required: true },
+      taskId: { type: ObjectId, ref: 'task', required: true }
 }, { timestamps: true })
 
 
-_schema.pre('deleteOne', function (next) {
+_schema.pre('deleteMany', function (next) {
       Promise.all([
 
       ])

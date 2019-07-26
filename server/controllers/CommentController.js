@@ -1,17 +1,16 @@
 import _commentService from '../services/CommentService'
 import express from 'express'
 import { Authorize } from '../middleware/authorize.js'
-import { EROFS } from 'constants';
 
 //PUblic
 export default class CommentController {
       constructor() {
             this.router = express.Router()
                   .use(Authorize.authenticated)
-                  .get('', thi.getAll)
+                  .get('', this.getAll)
                   .get('/:id', this.getById)
                   .post('', this.create)
-                  .put('/:id', this, edit)
+                  .put('/:id', this.edit)
                   .delete('/:id', this.delete)
                   .use(this.defaultRoute)
       }
@@ -28,7 +27,16 @@ export default class CommentController {
                               req.session.uid
                   })
                   return res.send(data)
-            } catch (error) { next(error) }
+            }
+            catch (error) { next(error) }
+      }
+
+      async getById(req, res, next) {
+            try {
+                  let data = await _commentService.findOne({ _id: req.params.id, authorId: req.session.uid })
+                  return res.send(data)
+            }
+            catch (error) { next(error) }
       }
 
       async create(req, res, next) {
