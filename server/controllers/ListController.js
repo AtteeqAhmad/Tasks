@@ -14,6 +14,7 @@ export default class ListsController {
                   .get('/:id/tasks/', this.getTasksByListId)
                   .post('', this.create)
                   .put('/:id', this.edit)
+                  .put('/:id/tasks', this.moveTask)
                   .delete('/:id', this.delete)
                   .use(this.defaultRoute)
       }
@@ -65,6 +66,16 @@ export default class ListsController {
                   }
                   throw new Error("invalid id")
             } catch (error) { next(error) }
+      }
+      async moveTask(req, res, next) {
+            try {
+                  let data = await _taskService.findOneAndUpdate(
+                        { listId: req.params.id }, req.body, { new: true })
+                  res.send("updated")
+            }
+            catch (error) {
+                  next(error)
+            }
       }
 
       async delete(req, res, next) {

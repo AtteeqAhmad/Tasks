@@ -10,6 +10,11 @@
       <button type="submit" class="btn btn-info">Comment Me</button>
     </form>
     <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
+
+    <select v-model="newListId">
+      <option v-for="list in lists" :value="list._id" :key="list._id">{{ list.title }}</option>
+    </select>
+    <button class="btn-sm btn-warning" type="submit" @click="move">Move List</button>
   </div>
 </template>
 
@@ -27,7 +32,8 @@ export default {
         boardId: this.taskData.boardId,
         listId: this.taskData.listId,
         taskId: this.taskData._id
-      }
+      },
+      newListId: ""
     };
   },
 
@@ -42,6 +48,9 @@ export default {
     },
     comments() {
       return this.$store.state.comments[this.taskData._id];
+    },
+    lists() {
+      return this.$store.state.lists;
     }
   },
 
@@ -51,6 +60,13 @@ export default {
     },
     deleteTask() {
       this.$store.dispatch("deleteTask", this.taskData._id);
+    },
+
+    move() {
+      this.$store.dispatch("moveTask", {
+        oldListId: this.taskData.listId,
+        listId: this.newListId
+      });
     }
   },
 

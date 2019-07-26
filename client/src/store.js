@@ -199,6 +199,17 @@ export default new Vuex.Store({
     },
 
 
+    async moveTask({ dispatch, commit }, payload) {
+      try {
+        let res = await api.put('lists/' + payload.oldListId + '/tasks', { listId: payload.listId })
+        dispatch('getTasksByListId', { _id: payload.listId })
+        dispatch('getTasksByListId', { _id: payload.oldListId })
+      }
+      catch (error) {
+        console.log(error)
+      }
+    },
+
 
     async getComment({ commit, dispatch }) {
       api.get('comments')
