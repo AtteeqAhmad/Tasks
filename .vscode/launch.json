@@ -9,7 +9,11 @@
                   "request": "launch",
                   "name": "nodemon",
                   "runtimeExecutable": "nodemon",
+<<<<<<< HEAD
                   "program": "${workspaceFolder}/index.js",
+=======
+                  "program": "${workspaceFolder}/app.js",
+>>>>>>> 8c6d2214ce06f750fcdc0dfb3fc05d2d0421d45f
                   "restart": true,
                   "console": "integratedTerminal",
                   "internalConsoleOptions": "neverOpen"
